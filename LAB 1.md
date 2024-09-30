@@ -49,17 +49,24 @@ terraform -v
 ### Task 3: Install Python 3, pip, AWS CLI, and Ansible on to Jump Server
 Install Python 3 and the required packages:
 ```
-sudo apt install python3-pip -y
+sudo yum install python3-pip -y 
 ```
-Installing `AWS CLI`
 ```
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
+python3 --version
 ```
-Installing Ansible
 ```
-sudo apt install ansible -y
+sudo pip3 install --upgrade pip
+```
+Install awscli, boto, boto3 and ansible
+Boto/Boto3 are AWS SDK which will be needed while accessing AWS APIs
+```
+sudo pip3 install awscli boto boto3
+```
+```
+sudo pip3 install ansible
+```
+```
+pip show ansible
 ```
 For Authentication with AWS we need to provide `IAM User's CLI Credentials`
 ```
