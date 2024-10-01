@@ -49,7 +49,7 @@ terraform -v
 ### Task 3: Install Python 3, pip, AWS CLI, and Ansible on to Jump Server
 Install Python 3 and the required packages:
 ```
-sudo yum install python3-pip -y 
+sudo apt install python3-pip -y 
 ```
 ```
 python3 --version
