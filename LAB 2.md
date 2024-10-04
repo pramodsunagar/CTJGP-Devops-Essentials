@@ -38,17 +38,12 @@ git --version
 sudo apt install git -y
 ```
 Download the **Java Code** that we are going to use in the CICD pipeline.
-```
+```bash
 git clone https://github.com/sirinali07/DevOpsTraining-HelloWorld.git
 ```
+
 ```
-unzip hello-world-master.zip
-```
-```
-rm hello-world-master.zip
-```
-```
-cd hello-world-master
+cd DevOpsTraining-HelloWorld/
 ```
 ```
 git init .
