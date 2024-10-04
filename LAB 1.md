@@ -265,7 +265,7 @@ In Jump Server Create a directory and change to it
 ```
 cd ~ && mkdir ansible && cd ansible
 ```
-Now, Create a playbook, which will deploy packages onto the `Docker-server` and `Jenkins-Server.` For this Create a new File with the name `DevOpsSetup.yml.`
+Now, Create a playbook, which will deploy packages onto the `Docker-server` and `Jenkins-Server.` For this Create a new File with the name ` main.yaml`
 ```
 vi main.yaml
 ```
