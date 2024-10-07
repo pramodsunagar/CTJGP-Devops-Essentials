@@ -3,11 +3,11 @@
 ### Task 1: Manually launch the Jump Server EC2 Instance
 
 * Region: North Virginia (us-east-1).
-* Use tag Name: `Mehar-Jump-Server`
+* Use tag Name: `sirin-Jump-Server`
 * AMI Type and OS Version: `Ubuntu 22.04 LTS`
 * Instance type: `t2.micro`
-* Create key pair with name: `Mehar-DevOps-Keypair`
-* Create security group with name: `Mehar-DevOps-SG`
+* Create key pair with name: `sirin-DevOps-Keypair`
+* Create security group with name: `sirin-DevOps-SG`
    (Include Ports: `22 [SSH],` `80 [HTTP],` `8080 [Jenkins],` `9999 [Tomcat],` and `4243 [Docker]`)
 * Configure Storage: 10 GiB
 * Click on `Launch Instance.`
@@ -219,7 +219,7 @@ variable "ins_type" {
 
 # Replace 'yourname' with your first name
 variable key_name {
-    default = "Mehar-Jenkins-Docker-KeyPair"
+    default = "sirin-Jenkins-Docker-KeyPair"
 }
 
 variable public_key {
@@ -228,7 +228,7 @@ variable public_key {
 
 variable "my-servers" {
   type    = list(string)
-  default = ["Mehar-Jenkins-Server", "Mehar-Docker-Server"]
+  default = ["sirin-Jenkins-Server", "sirin-Docker-Server"]
 }
 ```
 Now, execute the terraform commands to launch the new servers
@@ -306,7 +306,7 @@ Copy and paste the below code and save it.
 ---
 
 - name: Start installing Jenkins pre-requisites before installing Jenkins
-  hosts: Mehar-Jenkins-Server
+  hosts: sirin-Jenkins-Server
   become: yes
   become_method: sudo
   gather_facts: no
@@ -359,7 +359,7 @@ Copy and paste the below code and save it.
 
 
 - name: Start the Docker installation steps
-  hosts: Mehar-Docker-Server
+  hosts: sirin-Docker-Server
   become: yes
   become_method: sudo
   gather_facts: no
