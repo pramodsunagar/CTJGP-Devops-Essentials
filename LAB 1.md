@@ -3,11 +3,11 @@
 ### Task 1: Manually launch the Jump Server EC2 Instance
 
 * Region: North Virginia (us-east-1).
-* Use tag Name: `sirin-Jump-Server`
+* Use tag Name: `Mehar-Jump-Server`
 * AMI Type and OS Version: `Ubuntu 22.04 LTS`
 * Instance type: `t2.micro`
-* Create key pair with name: `sirin-DevOps-Keypair`
-* Create security group with name: `sirin-DevOps-SG`
+* Create key pair with name: `Mehar-DevOps-Keypair`
+* Create security group with name: `Mehar-DevOps-SG`
    (Include Ports: `22 [SSH],` `80 [HTTP],` `8080 [Jenkins],` `9999 [Tomcat],` and `4243 [Docker]`)
 * Configure Storage: 10 GiB
 * Click on `Launch Instance.`
@@ -49,24 +49,17 @@ terraform -v
 ### Task 3: Install Python 3, pip, AWS CLI, and Ansible on to Jump Server
 Install Python 3 and the required packages:
 ```
-sudo apt install python3-pip -y 
+sudo apt install python3-pip -y
 ```
+Installing `AWS CLI`
 ```
-python3 --version
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
 ```
+Installing Ansible
 ```
-sudo pip3 install --upgrade pip
-```
-Install awscli, boto, boto3 and ansible 
-Boto/Boto3 are AWS SDK which will be needed while accessing AWS APIs
-```
-sudo pip3 install awscli boto boto3 --break-system-packages
-```
-```
-sudo pip3 install ansible --break-system-packages
-```
-```
-pip show ansible
+sudo apt install ansible -y
 ```
 For Authentication with AWS we need to provide `IAM User's CLI Credentials`
 ```
@@ -103,7 +96,7 @@ As a first step, create a keyPair using `ssh-keygen` Command.
 **Note:**
 1. This will create `id_rsa` and `id_rsa.pub` in Jump Machine in `/home/ubuntu/.ssh/` path.
 2. While creating choose defaults like:
-   * path as **/home/ubuntu/.ssh/id_rsa**,
+   * path as **/home/ubuntu/.ssh/id_rsa**
    * don't set up any passphrase, and just hit the '**Enter**' key for 3 questions it asks.
 3. `-t rsa:` Specifies the type of key to create, in this case, RSA.
 4. `-b 2048:` Specifies the number of bits in the key, 2048 bits in this case. The larger the number of bits, the stronger the key.
@@ -119,7 +112,7 @@ mkdir devops-labs && cd devops-labs
 ```
 vi main.tf
 ```
-Copy and paste the below code into `DevOpsServers.tf`
+Copy and paste the below code into `main.tf`
 ```
 provider "aws" {
   region = var.region
@@ -146,6 +139,45 @@ resource "aws_instance" "my-machine" {
     Name = each.key
   }
 
+  # Ensure the .ssh directory exists before copying the file
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("/home/ubuntu/.ssh/id_rsa")  # Replace with the path to your private key
+      host        = self.public_ip
+    }
+
+    inline = [
+      "mkdir -p /home/ubuntu/.ssh"   # Ensure .ssh directory exists before copying the file
+    ]
+  }
+
+  provisioner "file" {
+    source      = "/home/ubuntu/.ssh/id_rsa"   # Source path on Host machine
+    destination = "/home/ubuntu/.ssh/id_rsa"  # Destination path on EC2 instance
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("/home/ubuntu/.ssh/id_rsa")  # Replace with the path to your private key
+      host        = self.public_ip
+    }
+  }
+
+  # After the file is copied, change its permissions
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = "ubuntu"
+      private_key = file("/home/ubuntu/.ssh/id_rsa")  # Replace with the path to your private key
+      host        = self.public_ip
+    }
+
+    inline = [
+      "chmod 400 /home/ubuntu/.ssh/id_rsa"  # Change the permissions of the copied file after it's been transferred
+    ]
+  }
+
   provisioner "local-exec" {
     command = <<-EOT
       echo [${each.key}] >> /etc/ansible/hosts
@@ -154,7 +186,7 @@ resource "aws_instance" "my-machine" {
   }
 }
 ```
-Now, create the variables file with all variables to be used in the `DevOpsServers.tf` config file.
+Now, create the variables file with all variables to be used in the `main.tf` config file.
 ```
 vi variables.tf
 ```
@@ -187,7 +219,7 @@ variable "ins_type" {
 
 # Replace 'yourname' with your first name
 variable key_name {
-    default = "sirin-Jenkins-Docker-KeyPair"
+    default = "Mehar-Jenkins-Docker-KeyPair"
 }
 
 variable public_key {
@@ -196,7 +228,7 @@ variable public_key {
 
 variable "my-servers" {
   type    = list(string)
-  default = ["jenkins-server", "docker-server"]
+  default = ["Mehar-Jenkins-Server", "Mehar-Docker-Server"]
 }
 ```
 Now, execute the terraform commands to launch the new servers
@@ -265,7 +297,7 @@ In Jump Server Create a directory and change to it
 ```
 cd ~ && mkdir ansible && cd ansible
 ```
-Now, Create a playbook, which will deploy packages onto the `Docker-server` and `Jenkins-Server.` For this Create a new File with the name ` main.yaml`
+Now, Create a playbook, which will deploy packages onto the `Docker-server` and `Jenkins-Server.` For this Create a new File with the name `main.yml.`
 ```
 vi main.yaml
 ```
@@ -274,7 +306,7 @@ Copy and paste the below code and save it.
 ---
 
 - name: Start installing Jenkins pre-requisites before installing Jenkins
-  hosts: jenkins-server
+  hosts: Mehar-Jenkins-Server
   become: yes
   become_method: sudo
   gather_facts: no
@@ -327,7 +359,7 @@ Copy and paste the below code and save it.
 
 
 - name: Start the Docker installation steps
-  hosts: docker-server
+  hosts: Mehar-Docker-Server
   become: yes
   become_method: sudo
   gather_facts: no
