@@ -248,7 +248,7 @@ cat /etc/ansible/hosts
 ![image](https://github.com/user-attachments/assets/b882382f-ba8b-4ca1-b9e7-a96bdbf664a9)
 
 
-### Task 6: Check the access from `Jump to Jenkins` and `Jump to Docker`
+### Task 6: Check the access from `Jump Server to Jenkins` and `Jump Server to Docker`
 
 From `Jump Server` SSH into `Jenkins-Server`, check they are accessible.
 
