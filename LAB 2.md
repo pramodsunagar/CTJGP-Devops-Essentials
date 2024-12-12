@@ -88,7 +88,7 @@ Currently our Code is in Local Repository.
 ```
 git remote add origin <Replace your Repository URL> 
 ```
-(**Example:** `git remote add origin https://github.com/janjiralakirankumar/hello-world.git`)
+(**Example:** `git remote add origin https://github.com/sirinali07/hello-world.git`)
 
 2. To view a specific alias use the below command.
 ```
