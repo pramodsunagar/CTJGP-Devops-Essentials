@@ -442,7 +442,7 @@ http://<Your_Docker_IP>:4243/version
 ```
 ![image](https://github.com/user-attachments/assets/0fef3915-1827-4d21-8ecf-4041d0ad5d5a)
 
-
+--------
 ![image](https://github.com/user-attachments/assets/79549c26-2e4c-453c-aef9-7d1500207ddc)
 
 
