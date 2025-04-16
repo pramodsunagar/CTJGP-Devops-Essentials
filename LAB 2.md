@@ -35,7 +35,7 @@ git --version
 ```
 **(Optional)** If it does not exist, then you can install it using the below command. (Else no need to execute the below line):  
 ```
-sudo apt install git -y
+sudo apt update && sudo apt install git -y
 ```
 Download the **Java Code** that we are going to use in the CICD pipeline.
 ```bash
