@@ -34,7 +34,7 @@
    2. Now, Re-check whether the Slave node is Online/Offline.
    </details>
 
-### Task-3: Build and deploy code in Docker Host on the container.
+### Task-2: Build and deploy code in Docker Host on the container.
 
 Once the Slave Node is Online, then continue the below.
 
@@ -74,7 +74,7 @@ sudo docker run -d -p 8080:8080 --name helloworld-container helloworld-image
 
 ```
 
-### Task 4: Building the **hello-world project**
+### Task 3: Building the **hello-world project**
 
 Manually click on **"Build Now"** in Jenkins. After a successful build, access the application.
 
