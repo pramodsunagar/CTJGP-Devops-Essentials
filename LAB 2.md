@@ -39,7 +39,7 @@ sudo apt update && sudo apt install git -y
 ```
 Download the **Java Code** that we are going to use in the CICD pipeline.
 ```bash
-git clone https://github.com/sirinali07/DevOpsTraining-HelloWorld.git
+git clone https://github.com/pramodsunagar/DevOpsTraining-HelloWorld.git
 ```
 
 ```
@@ -88,7 +88,7 @@ Currently our Code is in Local Repository.
 ```
 git remote add origin <Replace your Repository URL> 
 ```
-(**Example:** `git remote add origin https://github.com/sirinali07/hello-world.git`)
+(**Example:** `git remote add origin https://github.com/pramodsunagar/DevOpsTraining-HelloWorld.git`)
 
 2. To view a specific alias use the below command.
 ```
